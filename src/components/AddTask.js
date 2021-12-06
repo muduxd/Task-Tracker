@@ -4,15 +4,23 @@ export const AddTask = ({ addTask }) => {
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    let taskInput = event.target.task.value;
-    let dateInput = event.target.date.value;
-    let reminderInput = event.target.reminder.checked;
+    const taskInput = event.target.task.value;
+    const dateInput = event.target.date.value;
+    const reminderInput = event.target.reminder.checked;
 
-    addTask({ task: taskInput, date: dateInput, reminder: reminderInput });
+    event.target.task.placeholder = "Add Task";
+    event.target.date.placeholder = "Add Day & Time";
 
-    event.target.task.value = "";
-    event.target.date.value = "";
-    event.target.reminder.checked = false;
+    if (taskInput !== "" && dateInput !== "") {
+      addTask({ task: taskInput, date: dateInput, reminder: reminderInput });
+
+      event.target.task.value = "";
+      event.target.date.value = "";
+      event.target.reminder.checked = false;
+    } else {
+      if (taskInput === "") event.target.task.placeholder = "Please fill in the task";
+      if (dateInput === "") event.target.date.placeholder = "Please fill in the date";
+    }
   };
 
   return (
